@@ -12,4 +12,4 @@
     src: "{{ powershell_config_template }}"
     dest: /opt/microsoft/powershell/7/powershell.config.json
     mode: 0644
-    validate: 'python3 -mjson.tool %s'
+    validate: "{{ powershell_python | default('python3') }} -mjson.tool %s"
