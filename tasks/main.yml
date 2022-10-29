@@ -27,3 +27,4 @@
 
 - name: Import powershell-logging
   ansible.builtin.import_tasks: powershell-logging.yml
+  when: powershell_syslog_split|bool

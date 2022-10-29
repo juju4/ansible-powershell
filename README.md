@@ -3,7 +3,7 @@
 
 # powershell ansible role
 
-A simple ansible role to setup powershell, its config and logging under linux.
+Setup powershell, its config and logging under linux.
 
 See also
 * https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging_non-windows?view=powershell-7.2

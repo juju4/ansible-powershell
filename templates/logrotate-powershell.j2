@@ -1,7 +1,6 @@
 {{ ansible_managed | comment }}
 ## /etc/logrotate.d/powershell
-/var/log/powershell/*.log
-/var/log/powershell/transcription/*/*.log {
+/var/log/powershell/*.log {
     rotate {{ powershell_logrotate_rotate|int }}
     {{ powershell_logrotate_period }}
 {% if powershell_logrotate_datext is defined and powershell_logrotate_datext|string %}

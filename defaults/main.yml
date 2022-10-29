@@ -12,6 +12,8 @@ powershell_module_names:
 powershell_enableprotectedeventlogging: true
 powershell_enabletranscripting: true
 
+# separate powershell logs from standard syslog
+powershell_syslog_split: true
 powershell_syslog_target: /var/log/powershell/powershell.log
 powershell_syslog_target2: /var/log/powershell/powershell-scriptblock.log
 
@@ -21,5 +23,6 @@ powershell_logrotate_compress: true
 powershell_logrotate_delaycompress: true
 powershell_logrotate_datext: true
 powershell_logrotate_datformat: '-%Y%m%d'
+powershell_compress_older_transcriptions_days: 7
 
 is_container: false

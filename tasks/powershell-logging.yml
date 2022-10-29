@@ -41,3 +41,13 @@
     mode: '0644'
     backup: "{{ powershell_backup | default(false) }}"
     validate: 'logrotate -dv %s'
+
+- name: Add cron task to compress transcription logs
+  ansible.builtin.cron:
+    name: "compress transcription logs"
+    minute: "15"
+    hour: "1"
+    day: "*"
+    user: "root"
+    job: "find /var/log/powershell/transcription/ -type f -mtime +{{ powershell_compress_older_transcriptions_days | int }} -exec gzip {} \\;"
+    cron_file: ansible_compress_pwsh_transcriptions

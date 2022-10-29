@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: powershell
+  author: juju4
+  description: Setup powershell, its config and logging under linux.
+  license: BSD
+  min_ansible_version: '1.9'
+  standalone: true
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
+        - bionic
+  galaxy_tags:
+    - system
+    - scripting
+dependencies: []
