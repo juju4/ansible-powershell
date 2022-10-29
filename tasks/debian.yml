@@ -1,5 +1,12 @@
 ---
 
+- name: Debian | Update cache
+  ansible.builtin.apt:
+    update_cache: "yes"
+    cache_valid_time: "{{ powershell_apt_update_cache | default(3600) }}"
+  register: pkg_result
+  until: pkg_result is success
+
 - name: Ensure apt dependencies are present
   ansible.builtin.package:
     name:
