@@ -71,7 +71,7 @@
     validate: 'logrotate -dv %s'
 
 - name: Ensure cron is installed
-  ansible.builtin.apt:
+  ansible.builtin.package:
     name: "{{ cron_pkg }}"
     state: present
   register: pkg_result
