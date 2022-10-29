@@ -2,6 +2,21 @@
 
 - name: Verify
   hosts: powershell_group
+  vars:
+    is_container: false
+  pre_tasks:
+    - name: Debug | var ansible_virtualization_type
+      ansible.builtin.debug:
+        var: ansible_virtualization_type
+    - name: Set fact is_container
+      ansible.builtin.set_fact:
+        is_container: true
+      when: >
+        (ansible_virtualization_type is defined and
+          (ansible_virtualization_type == "docker" or ansible_virtualization_type == "containerd"
+           or ansible_virtualization_type == "container"
+          )
+        )
   tasks:
     - name: Gather package facts
       ansible.builtin.package_facts:
@@ -28,6 +43,10 @@
         - pwsh -Command iex "((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
       changed_when: false
       failed_when: false
+    - name: List powershell logs files
+      ansible.builtin.command: "find /var/log/powershell/ -ls"
+      changed_when: false
+      failed_when: false
     - name: Get transcription logs matches
       ansible.builtin.command: "grep {{ item }} /var/log/powershell/transcription/*/PowerShell_transcript.*.txt"
       loop:
@@ -36,3 +55,5 @@
         - /opt/microsoft/powershell/7/Modules/PSReadLine/SamplePSReadLineProfile.ps1
         - iex "((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
       changed_when: false
+      when:
+        - not is_container|bool
