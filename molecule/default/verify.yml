@@ -1,0 +1,38 @@
+---
+
+- name: Verify
+  hosts: powershell_group
+  tasks:
+    - name: Gather package facts
+      ansible.builtin.package_facts:
+        manager: auto
+    - name: Validate that needed packages are present
+      ansible.builtin.assert:
+        that: ansible_facts.packages['powershell']
+
+    - name: Check powershell config
+      ansible.builtin.stat:
+        path: /opt/microsoft/powershell/7/powershell.config.json
+      register: cfg
+    - name: Validate powershell config is present
+      ansible.builtin.assert:
+        that: cfg.stat.exists and cfg.stat.size != 0 and cfg.stat.mode == '0644'
+
+    - name: Run few powershell
+      ansible.builtin.command: "{{ item }}"
+      loop:
+        - pwsh -Command Get-ExecutionPolicy
+        - pwsh -Command Get-ExperimentalFeature
+        - pwsh -File /opt/microsoft/powershell/7/Modules/PSReadLine/SamplePSReadLineProfile.ps1
+        # RemoteSigned
+        - pwsh -Command iex "((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+      changed_when: false
+      failed_when: false
+    - name: Get transcription logs matches
+      ansible.builtin.command: "grep {{ item }} /var/log/powershell/transcription/*/PowerShell_transcript.*.txt"
+      loop:
+        - Get-ExecutionPolicy
+        - Get-ExperimentalFeature
+        - /opt/microsoft/powershell/7/Modules/PSReadLine/SamplePSReadLineProfile.ps1
+        - iex "((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+      changed_when: false

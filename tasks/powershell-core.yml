@@ -1,0 +1,15 @@
+---
+
+- name: Ensure Powershell package is present
+  ansible.builtin.package:
+    name: powershell
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: Set global powershell config
+  ansible.builtin.template:
+    src: "{{ powershell_config_template }}"
+    dest: /opt/microsoft/powershell/7/powershell.config.json
+    mode: 0644
+    validate: 'python3 -mjson.tool %s'

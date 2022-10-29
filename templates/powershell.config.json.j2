@@ -1,0 +1,41 @@
+{
+  "Microsoft.PowerShell:ExecutionPolicy": "{{ powershell_executionpolicy }}",
+  "PowerShellPolicies": {
+    "ScriptExecution": {
+      "ExecutionPolicy": "{{ powershell_executionpolicy }}",
+      "EnableScripts": {{ powershell_enablescripts | bool | lower }}
+    },
+    "ScriptBlockLogging": {
+      "EnableScriptBlockInvocationLogging": true,
+      "EnableScriptBlockLogging": true
+    },
+    "ModuleLogging": {
+      "EnableModuleLogging": {{ powershell_enablemodule_logging | bool | lower }},
+      "ModuleNames": [
+{% for module in powershell_module_names %}
+        "{{ module }}"{% if not loop.last %},{% endif %}
+{% endfor %}
+
+      ]
+    },
+    "ProtectedEventLogging": {
+      "EnableProtectedEventLogging": {{ powershell_enableprotectedeventlogging | bool | lower }},
+      "EncryptionCertificate": [
+        "Joe"
+      ]
+    },
+    "Transcription": {
+      "EnableTranscripting": {{ powershell_enabletranscripting | bool | lower }},
+      "EnableInvocationHeader": true,
+      "OutputDirectory": "{{ powershell_transcription_outputdir }}"
+    },
+    "UpdatableHelp": {
+      "DefaultSourcePath": "f:\\temp"
+    },
+    "ConsoleSessionConfiguration": {
+      "EnableConsoleSessionConfiguration": false,
+      "ConsoleSessionConfigurationName": "name"
+    }
+  },
+  "LogLevel": "verbose"
+}

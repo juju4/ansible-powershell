@@ -1,0 +1,24 @@
+---
+
+- name: Ensure apt dependencies are present
+  ansible.builtin.package:
+    name:
+      - curl
+      - gnupg
+      - apt-transport-https
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: Ensure Microsoft apt repository key is present
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: Ensure Microsoft apt repository is present
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-{{ ansible_distribution | lower }}-{{ ansible_distribution_release | lower }}-prod {{ ansible_distribution_release | lower }} main"
+    state: present
+    filename: powershell

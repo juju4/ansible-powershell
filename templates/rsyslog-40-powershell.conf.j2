@@ -1,0 +1,14 @@
+if ($programname == 'powershell' and $msg contains "ScriptBlock_") then {{ powershell_syslog_target2 }}
+#:syslogtag, contains, "powershell[" /var/log/powershell.log
+{% if rsyslog_v is defined and rsyslog_v and rsyslog_v|string is version_compare('8.0', '<') %}
+& ~
+{% else %}
+& stop
+{% endif %}
+if ($programname == 'powershell') then {{ powershell_syslog_target }}
+#:syslogtag, contains, "powershell[" /var/log/powershell.log
+{% if rsyslog_v is defined and rsyslog_v and rsyslog_v|string is version_compare('8.0', '<') %}
+& ~
+{% else %}
+& stop
+{% endif %}

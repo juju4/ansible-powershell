@@ -1,0 +1,18 @@
+{{ ansible_managed | comment }}
+## /etc/logrotate.d/powershell
+/var/log/powershell/*.log
+/var/log/powershell/transcription/*/*.log {
+    rotate {{ powershell_logrotate_rotate|int }}
+    {{ powershell_logrotate_period }}
+{% if powershell_logrotate_datext is defined and powershell_logrotate_datext|string %}
+    dateext
+    dateformat {{ powershell_logrotate_datformat }}
+{% endif%}
+    missingok
+{% if powershell_logrotate_compress %}
+    compress
+    delaycompress
+{% endif %}
+    create 640 {{ syslog_user | default('root') }} adm
+    sharedscripts
+}
