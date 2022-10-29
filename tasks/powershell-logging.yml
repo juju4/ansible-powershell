@@ -1,5 +1,32 @@
 ---
 
+- name: Ensure rsyslog package is present
+  ansible.builtin.package:
+    name: rsyslog
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
+- name: RedHat
+  when: ansible_os_family == "RedHat"
+  block:
+    - name: RedHat | Ensure /etc/rsyslog.d exists
+      ansible.builtin.file:
+        dest: /etc/rsyslog.d
+        state: directory
+        owner: root
+        mode: '0755'
+    - name: RedHat | Ensure rsyslog use rsyslog.d directory
+      ansible.builtin.lineinfile:
+        dest: /etc/rsyslog.conf
+        regexp: '^\$IncludeConfig /etc/.*'
+        line: '$IncludeConfig /etc/rsyslog.d/*.conf'
+        mode: '0644'
+        backup: "{{ powershell_backup | default(false) }}"
+        validate: 'rsyslogd -N2 -f %s'
+      notify:
+        - Restart rsyslog
+
 - name: Ensure logging directories exist
   ansible.builtin.file:
     path: "{{ item }}"
