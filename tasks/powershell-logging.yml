@@ -70,6 +70,13 @@
     backup: "{{ powershell_backup | default(false) }}"
     validate: 'logrotate -dv %s'
 
+- name: Ensure cron is installed
+  ansible.builtin.apt:
+    name: "{{ cron_pkg }}"
+    state: present
+  register: pkg_result
+  until: pkg_result is success
+
 - name: Add cron task to compress transcription logs
   ansible.builtin.cron:
     name: "compress transcription logs"
