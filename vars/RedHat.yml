@@ -1,4 +1,4 @@
 ---
 
 syslog_user: root
-cron_pkg: crontabs
+cron_pkg: cronie
