@@ -32,7 +32,7 @@
     path: "{{ item }}"
     state: directory
     owner: "{{ syslog_user | default('root') }}"
-    mode: 0750
+    mode: '0750'
   loop:
     - /var/log/powershell
     - /var/log/powershell/transcription

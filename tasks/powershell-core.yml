@@ -11,5 +11,5 @@
   ansible.builtin.template:
     src: "{{ powershell_config_template }}"
     dest: /opt/microsoft/powershell/7/powershell.config.json
-    mode: 0644
+    mode: '0644'
     validate: "{{ powershell_python | default('python3') }} -mjson.tool %s"
