@@ -23,7 +23,8 @@
         manager: auto
     - name: Validate that needed packages are present
       ansible.builtin.assert:
-        that: ansible_facts.packages['powershell']
+        that:
+          - ansible_facts.packages['powershell'] is defined
 
     - name: Check powershell config
       ansible.builtin.stat:
