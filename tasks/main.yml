@@ -1,5 +1,4 @@
 ---
-
 - name: Include distribution-specific variables
   ansible.builtin.include_vars: "{{ ansible_facts['distribution'] }}.yml"
 

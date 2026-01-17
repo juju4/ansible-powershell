@@ -1,5 +1,4 @@
 ---
-
 - name: Verify
   hosts: powershell_group
   vars:

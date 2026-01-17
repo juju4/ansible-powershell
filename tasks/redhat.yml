@@ -1,12 +1,11 @@
 ---
-
 - name: RHEL | Install Microsoft repository
   ansible.builtin.get_url:
     url: "https://packages.microsoft.com/config/rhel/{{ ansible_facts['distribution_major_version'] }}/prod.repo"
     dest: /etc/yum.repos.d/microsoft.repo
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   register: dl_result
   until: dl_result is success
 

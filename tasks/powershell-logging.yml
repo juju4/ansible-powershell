@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure rsyslog package is present
   ansible.builtin.package:
     name: rsyslog
@@ -15,15 +14,15 @@
         dest: /etc/rsyslog.d
         state: directory
         owner: root
-        mode: '0755'
+        mode: "0755"
     - name: RedHat | Ensure rsyslog use rsyslog.d directory
       ansible.builtin.lineinfile:
         dest: /etc/rsyslog.conf
-        regexp: '^\$IncludeConfig /etc/.*'
-        line: '$IncludeConfig /etc/rsyslog.d/*.conf'
-        mode: '0644'
+        regexp: "^\\$IncludeConfig /etc/.*"
+        line: "$IncludeConfig /etc/rsyslog.d/*.conf"
+        mode: "0644"
         backup: "{{ powershell_backup | default(false) }}"
-        validate: 'rsyslogd -N2 -f %s'
+        validate: "rsyslogd -N2 -f %s"
       notify:
         - Restart rsyslog
 
@@ -32,7 +31,7 @@
     path: "{{ item }}"
     state: directory
     owner: "{{ syslog_user | default('root') }}"
-    mode: '0750'
+    mode: "0750"
   loop:
     - /var/log/powershell
     - /var/log/powershell/transcription
@@ -43,8 +42,8 @@
     dest: "/etc/rsyslog.d/40-powershell.conf"
     owner: root
     group: root
-    mode: '0644'
-    validate: 'rsyslogd -N2 -f %s'
+    mode: "0644"
+    validate: "rsyslogd -N2 -f %s"
     backup: "{{ powershell_backup | default(false) }}"
   notify:
     - Restart rsyslog
@@ -60,15 +59,15 @@
   ansible.builtin.file:
     dest: /etc/logrotate.d
     state: directory
-    mode: '0755'
+    mode: "0755"
 
 - name: Ensure powershell logs are rotated
   ansible.builtin.template:
     src: "logrotate-powershell.j2"
     dest: "/etc/logrotate.d/powershell"
-    mode: '0644'
+    mode: "0644"
     backup: "{{ powershell_backup | default(false) }}"
-    validate: 'logrotate -dv %s'
+    validate: "logrotate -dv %s"
 
 - name: Ensure cron is installed
   ansible.builtin.package:

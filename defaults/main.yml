@@ -6,7 +6,7 @@ powershell_executionpolicy: RemoteSigned
 powershell_enablescripts: true
 powershell_enablemodule_logging: true
 powershell_module_names:
-  - '*'
+  - "*"
   - PSReadline
   - PowerShellGet
 powershell_enableprotectedeventlogging: true
@@ -17,12 +17,12 @@ powershell_syslog_split: true
 powershell_syslog_target: /var/log/powershell/powershell.log
 powershell_syslog_target2: /var/log/powershell/powershell-scriptblock.log
 
-powershell_logrotate_period: 'daily'
+powershell_logrotate_period: "daily"
 powershell_logrotate_rotate: 90
 powershell_logrotate_compress: true
 powershell_logrotate_delaycompress: true
 powershell_logrotate_datext: true
-powershell_logrotate_datformat: '-%Y%m%d'
+powershell_logrotate_datformat: "-%Y%m%d"
 powershell_compress_older_transcriptions_days: 7
 
 is_container: false
