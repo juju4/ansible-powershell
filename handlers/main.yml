@@ -1,4 +1,8 @@
 ---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
 - name: Restart rsyslog
   ansible.builtin.service:
     name: rsyslog
