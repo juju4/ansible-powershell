@@ -29,7 +29,7 @@ jobs:
             experimental: true
             suite: default
           - molecule_distro: "ubuntu:24.04"
-            experimental: true
+            experimental: false
             suite: default
           - molecule_distro: "ubuntu:22.04"
             experimental: false
