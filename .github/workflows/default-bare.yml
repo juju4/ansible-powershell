@@ -137,6 +137,7 @@ jobs:
       - name: After script - logs
         run: |
           set -x
-          cat /var/log/powershell/transcription/*/PowerShell_transcript.*.txt
+          sudo ls -l /var/log/powershell/transcription/*/PowerShell_transcript.*.txt
+          sudo cat /var/log/powershell/transcription/*/PowerShell_transcript.*.txt
         if: ${{ always() }}
         continue-on-error: true
