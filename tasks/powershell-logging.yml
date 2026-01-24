@@ -22,7 +22,6 @@
         line: "$IncludeConfig /etc/rsyslog.d/*.conf"
         mode: "0644"
         backup: "{{ powershell_backup | default(false) }}"
-        validate: "rsyslogd -N2 -f %s"
       notify:
         - Restart rsyslog
 
