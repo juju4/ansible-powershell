@@ -3,6 +3,10 @@
   ansible.builtin.apt:
     update_cache: true
 
+- name: Validate powershell rsyslog config
+  ansible.builtin.command:
+    cmd: "rsyslogd -N2 /etc/rsyslog.d/40-powershell.conf"
+
 - name: Restart rsyslog
   ansible.builtin.service:
     name: rsyslog

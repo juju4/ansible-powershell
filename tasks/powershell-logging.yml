@@ -43,9 +43,9 @@
     owner: root
     group: root
     mode: "0644"
-    validate: "rsyslogd -N2 -f %s"
     backup: "{{ powershell_backup | default(false) }}"
   notify:
+    - Validate powershell rsyslog config
     - Restart rsyslog
 
 - name: Ensure logrotate package is present
