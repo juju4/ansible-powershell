@@ -30,7 +30,7 @@
   ansible.builtin.deb822_repository:
     name: "microsoft"
     types: deb
-    uris: "https://packages.microsoft.com/repos/microsoft-{{ ansible_facts['distribution'] | lower }}/{{ ansible_facts['distribution_release'] | lower }}-prod"
+    uris: "https://packages.microsoft.com/repos/microsoft-{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] | lower }}-prod"
     suites: "{{ ansible_facts['distribution_release'] | lower }}"
     components:
       - main
