@@ -48,7 +48,8 @@
       changed_when: false
       failed_when: false
     - name: Get transcription logs matches
-      ansible.builtin.command: "grep {{ item }} /var/log/powershell/transcription/*/PowerShell_transcript.*.txt"
+      ansible.builtin.shell:
+        cmd: "grep '{{ item }}' /var/log/powershell/transcription/*/PowerShell_transcript.*.txt"
       loop:
         - Get-ExecutionPolicy
         - Get-ExperimentalFeature
