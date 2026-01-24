@@ -54,7 +54,7 @@
         - Get-ExecutionPolicy
         - Get-ExperimentalFeature
         - /opt/microsoft/powershell/7/Modules/PSReadLine/SamplePSReadLineProfile.ps1
-        - iex "((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
+        - 'New-Object System.Net.WebClient'
       changed_when: false
       when:
         - not is_container|bool
