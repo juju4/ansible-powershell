@@ -1,6 +1,6 @@
 ---
 - name: Verify
-  hosts: powershell_group
+  hosts: "{{ playbook_hosts | default('all') }}"
   vars:
     is_container: false
   pre_tasks:
