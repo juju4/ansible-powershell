@@ -16,16 +16,24 @@
   register: pkg_result
   until: pkg_result is success
 
-- name: Ensure Microsoft apt repository key is present
-  ansible.builtin.apt_key:
-    url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
-  register: pkg_result
-  until: pkg_result is success
+- name: Debian | Add Microsoft APT key
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee {{ powershell_apt_key_path }} > /dev/null
+  args:
+    executable: /bin/bash
+    creates: "{{ powershell_apt_key_path }}"
 
-- name: Ensure Microsoft apt repository is present
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-{{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] |
-      lower }}-prod {{ ansible_facts['distribution_release'] | lower }} main"
-    state: present
-    filename: powershell
+- name: Add Microsoft apt repository for powershell
+  ansible.builtin.deb822_repository:
+    name: "microsoft"
+    types: deb
+    uris: "https://packages.microsoft.com/repos/microsoft-{{ ansible_facts['distribution'] | lower }}/{{ ansible_facts['distribution_release'] | lower }}-prod"
+    suites: "{{ ansible_facts['distribution_release'] | lower }}"
+    components:
+      - main
+    architectures: amd64
+    signed_by: "{{ powershell_apt_key_path }}"
+  notify:
+    - Update apt cache

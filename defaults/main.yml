@@ -1,5 +1,6 @@
 ---
 
+powershell_apt_key_path: /usr/share/keyrings/microsoft.gpg
 powershell_config_template: powershell.config.json.j2
 powershell_transcription_outputdir: /var/log/powershell/transcription
 powershell_executionpolicy: RemoteSigned
