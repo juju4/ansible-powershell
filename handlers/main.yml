@@ -6,6 +6,7 @@
 - name: Validate powershell rsyslog config
   ansible.builtin.command:
     cmd: "rsyslogd -N2 /etc/rsyslog.d/40-powershell.conf"
+  changed_when: false
 
 - name: Restart rsyslog
   ansible.builtin.service:
